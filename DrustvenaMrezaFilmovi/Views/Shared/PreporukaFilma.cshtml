@@ -1,0 +1,52 @@
+﻿@using DrustvenaMrezaFilmovi.Controllers;
+@model dynamic
+
+<div class=" scrollable-div">
+    <div class="border border-dark border-2 pt-2" style="width: 100%">
+        @if (LoginRegistracijaController.ulogovan)
+                            {
+        <h5>
+                Recommended movies
+            </h5>
+        }else
+        {
+             <h5>
+                Top rated movies
+            
+            </h5>       
+        }
+    </div>
+    @foreach (Film item in Model.Filmovi)
+    {
+        <div class="border border-dark border-1 p-1 overflow-auto">
+            <h5 class="p-0 m-0" href="@Url.Action("Details", "Film", new { id = item.Id })">
+                <a href="@Url.Action("Details", "Film", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Naziv)</a>
+            </h5>
+            <h6 class="p-1 m-0">@Html.DisplayFor(modelItem => item.ProsecnaOcena)% rating</h6>
+            <div class="text-start">
+                Reziser:
+                @foreach (ReziserFilma rez in item.Reziseri)
+                {
+                    <small class="p-0 m-0">
+                        |@rez.Umetnik.ToString()|
+                        </small>
+                }
+            </div>
+            <div class="text-start">
+                Glavne Uloge:
+                @foreach (Uloga u in item.Uloge)
+                {
+                    if (u.JeGlavna)
+                    {
+                        <small class="p-0 m-0">
+                            |@u.Glumac.ToString()|
+                        </small>
+                    }
+
+                }
+            </div>
+        </div>
+    }
+
+</div>
+

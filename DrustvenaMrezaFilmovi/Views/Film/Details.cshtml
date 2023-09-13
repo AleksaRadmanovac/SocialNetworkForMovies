@@ -1,0 +1,39 @@
+﻿@using DrustvenaMrezaFilmovi.Controllers;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="row">
+    <div id="contentDiv" class="text-center col-3" style="height:inherit; border:solid;border-width:inherit; border-left-width:1px; border-right-width:0px">
+        @if (!LoginRegistracijaController.ulogovan)
+        {
+            <div id="reklamaDiv" class="mx-auto mt-4 mb-5 border-secondary" style="width: 85%; border:solid;border-width: 2px;">
+                
+                @await Html.PartialAsync("~/Views/Shared/Reklama.cshtml")
+            </div>
+            <div>
+                
+                @await Html.PartialAsync("~/Views/Shared/LoginRegistracija.cshtml")
+            </div>
+        }
+        else
+        {
+            <div>
+                @await Html.PartialAsync("~/Views/Shared/ProfileInfo.cshtml")
+
+            </div>
+            <div id="reklamaDiv" class="mx-auto mt-3 mb-2 border-secondary" style="width: 85%; border:solid;border-width: 2px;">
+                @await Html.PartialAsync("~/Views/Shared/Reklama.cshtml")
+            </div>
+        }
+    </div>
+
+    <div class="text-center mx-auto container col-9 mt-0 mb-0 border-dark" style="height: 100%; border:solid;border-width:inherit; border-left-width:1px; border-right-width:1px;">
+        <div>
+            @Html.Partial("~/Views/Shared/DetaljiFilma.cshtml")
+        </div>
+    </div>
+
+
+</div>

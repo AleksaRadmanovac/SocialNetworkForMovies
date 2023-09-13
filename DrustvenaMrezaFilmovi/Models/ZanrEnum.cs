@@ -1,0 +1,29 @@
+﻿namespace DrustvenaMrezaFilmovi.Models
+{
+    public enum ZanrEnum
+    {
+        Action,
+        Adventure,
+        Animation,
+        Biography,
+        Comedy,
+        Crime,
+        Documentary,
+        Drama,
+        Family,
+        Fantasy,
+        FilmNoir,
+        History,
+        Horror,
+        Music,
+        Musical,
+        Mystery,
+        Romance,
+        SciFi,
+        Short,
+        Sport,
+        Thriller,
+        War,
+        Western
+    }
+}

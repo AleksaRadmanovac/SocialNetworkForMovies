@@ -1,0 +1,176 @@
+﻿@using DrustvenaMrezaFilmovi.Controllers;
+@if (!LoginRegistracijaController.ulogovan)
+{
+    <div id="dugmad">
+        <button type="button" class="btn btn-primary" id="loginBtn" fdprocessedid="1bu878">Login</button>
+        <p class="text-body-secondary m-2">OR</p>
+        <button type="button" class="btn btn-primary" id="registerBtn" fdprocessedid="1bu878">Register</button>
+    </div>
+
+    <div id="login" class="d-none">
+        <button id="backBtn1" class="btn btn-primary btn-sm mt-4" fdprocessedid="ww25l">Back</button>
+        <form method="post" id="formaLogin">
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="form-label mt-4">Username</label>
+                <input type="text" class="form-control"  name="Username" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" fdprocessedid="swfpnh">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+                <input type="password" class="form-control" name="Password" id="exampleInputPassword1" placeholder="Password" autocomplete="off" fdprocessedid="fu6aln">
+            </div>
+            <p id="error-login" class="text-danger"></p>
+            <button type="submit" class="btn btn-primary mt-4" fdprocessedid="6eu1yp">Submit</button>
+        </form>
+    </div>
+    <div id="registracija" class="d-none">
+        <button id="backBtn2" class="btn btn-primary btn-sm mt-1" fdprocessedid="ww25l">Back</button>
+        <form method="post" id="formaRegistracije">
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="form-label mt-1">Username</label>
+                <input type="text" class="form-control" name="Username" id="register-username" aria-describedby="emailHelp" placeholder="Enter username" fdprocessedid="swfpnh">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="form-label mt-1" name="Username">Password</label>
+                <input type="password" class="form-control" name="Password" id="exampleInputPassword1" placeholder="Password" autocomplete="off" fdprocessedid="fu6aln">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="form-label mt-1">Confirm Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" autocomplete="off" fdprocessedid="fu6aln">
+            </div>
+            <div class="form-group">
+                <label for="exampleSelect1" class="form-label mt-1">Gender</label>
+                <select class="form-select" id="exampleSelect1" name="Pol" fdprocessedid="g2qi1">
+                    @Html.Raw(string.Join("", Enum.GetValues(typeof(Pol)).Cast<Pol>().Select(p => $"<option>{p}</option>")))
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleSelect1" class="form-label mt-1">Region</label>
+                <select class="form-select" id="exampleSelect2" name="Region" fdprocessedid="g2qi1">
+                    @Html.Raw(string.Join("", Enum.GetValues(typeof(Region)).Cast<Region>().Select(p => $"<option>{p}</option>")))
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleSelect1" class="form-label mt-1">Year of Birth</label>
+                <select class="form-select" id="exampleSelect3" name="Godiste" fdprocessedid="g2qi1">
+                    @for (int i = 1903; i <= 2023; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2" fdprocessedid="6eu1yp">Submit</button>
+        </form>
+    </div>
+}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const contentDiv = document.getElementById("contentDiv");
+        const loginBtn = document.getElementById("loginBtn");
+        const registerBtn = document.getElementById("registerBtn");
+        
+
+
+
+
+        // Event handler for the login button
+        function loginForma() {
+            // Replace the content of the div with the login form and a back button
+            console.log("logen");
+            document.getElementById("login").classList.remove("d-none");
+            document.getElementById("dugmad").classList.add("d-none");
+            document.getElementById("reklamaDiv").classList.add("d-none");
+
+            //document.getElementById("login").classList.toggle("d-block");
+
+            // Add a click event handler for the back button
+            const backBtn1 = document.getElementById("backBtn1");
+            backBtn1.addEventListener("click", function () {
+                // Restore the original content
+
+                document.getElementById("login").classList.add("d-none");
+                document.getElementById("reklamaDiv").classList.remove("d-none");
+
+                document.getElementById("dugmad").classList.remove("d-none");
+                //document.getElementById("login").classList.toggle("d-block");
+                const registerBtn = document.getElementById("registerBtn");
+                registerBtn.addEventListener("click", registerForma);
+                const loginBtn = document.getElementById("loginBtn");
+                loginBtn.addEventListener("click", loginForma);
+            });
+        }
+        function registerForma() {
+            // Replace the content of the div with the login form and a back button
+            console.log("registar")
+            document.getElementById("registracija").classList.remove("d-none");
+            document.getElementById("dugmad").classList.add("d-none");
+            document.getElementById("reklamaDiv").classList.add("d-none");
+            //document.getElementById("registracija").classList.add("d-block");
+
+            // Add a click event handler for the back button
+            const backBtn2 = document.getElementById("backBtn2");
+            backBtn2.addEventListener("click", function () {
+                // Restore the original content
+                
+                document.getElementById("registracija").classList.add("d-none");
+                document.getElementById("dugmad").classList.remove("d-none");
+                document.getElementById("reklamaDiv").classList.remove("d-none");
+                
+            });
+        }
+    // Event handler for the login button
+    loginBtn.addEventListener("click", loginForma);
+    registerBtn.addEventListener("click", registerForma);
+
+        $('#formaRegistracije').submit(function (event) {
+            event.preventDefault();
+
+            // Serialize the form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '/LoginRegistracija/Register', // Replace with your login action URL
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Redirect to a successful login page or do something else
+                        window.location.href = '/Home/Interests';
+                    } else {
+                        console.log("ima username");
+                        $('#register-username').addClass("is-invalid text-danger");
+                        $('#register-username').val("Username vec postoji");
+                    }
+                },
+                error: function () {
+                }
+            });
+        });
+
+        $('#formaLogin').submit(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Serialize form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '/LoginRegistracija/Login', // Replace with your login action URL
+                method: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Redirect to a successful login page or do something else
+                        window.location.href = '/Home/LoggedIn';
+                    } else {
+                        $('#error-login').text('Login failed. Please check your credentials.');
+                    }
+                },
+                error: function () {
+                    $('#error-login').text('An error occurred during login.');
+                }
+            });
+        });
+        
+});
+
+</script>
+

@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="row">
+    <div id="contentDiv" class="text-center col-3" style="height:inherit; border:solid;border-width:inherit; border-left-width:1px; border-right-width:0px">
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/ProfileInfo.cshtml")
+
+        </div>
+        <div id="reklamaDiv" class="mx-auto mt-3 mb-2 border-secondary" style="width: 85%; border:solid;border-width: 2px;">
+            @await Html.PartialAsync("~/Views/Shared/Reklama.cshtml")
+        </div>
+        
+
+    </div>
+
+    <div class="text-center mx-auto container col-6 scrollable-div mt-0 mb-0 border-dark" style="height: 100%; border:solid;border-width:inherit; border-left-width:1px; border-right-width:1px;">
+        <div>
+            @await Html.PartialAsync("~/Views/Shared/Feed.cshtml")
+        </div>
+    </div>
+    <div class="text-center col-3 align-middle" style="border:solid;border-width:inherit; border-left-width:0px; border-right-width:1px">
+        <div class="mx-auto mt-2 border-dark border-2" style="">
+            @await Html.PartialAsync("~/Views/Shared/PreporukaFilma.cshtml")
+        </div>
+
+    </div>
+
+</div>

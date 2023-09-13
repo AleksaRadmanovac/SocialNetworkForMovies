@@ -1,0 +1,37 @@
+﻿@using DrustvenaMrezaFilmovi.Controllers;
+<h3 class="mt-2">
+    <a href="@Url.Action("Details", "Korisnik", new { id = @LoginRegistracijaController.ulogovaniKorisnik.Id })">My Profile</a>
+</h3>
+<div class="border border-dark p-2 ">
+    <div class="text-start">
+        <span class="">Username: </span>
+        <span>@LoginRegistracijaController.ulogovaniKorisnik.Username</span>
+        <br />
+        <span>Godiste: </span>
+        <span>@LoginRegistracijaController.ulogovaniKorisnik.Godiste</span>
+        <br />
+        <span>Pol: </span>
+        <span>@LoginRegistracijaController.ulogovaniKorisnik.Pol</span>
+        <br />
+        <span>Region: </span>
+        <span>@LoginRegistracijaController.ulogovaniKorisnik.Region</span>
+        <br />
+    </div>
+    <p class="mb-0 mt-3">Friend List: </p>
+    <div class="border border-dark m-1 mt-0">
+        @for(int i = 0; i < LoginRegistracijaController.ulogovaniKorisnik.Prijatelji.Count && i <= 3; i++)
+        {
+            <div class=" border border-top-0 border-start-0 border-end-0 border-dark">
+                <a href="@Url.Action("Details", "Korisnik", new { id = @LoginRegistracijaController.ulogovaniKorisnik.Prijatelji[i].Id })" style="text-decoration: none;">@LoginRegistracijaController.ulogovaniKorisnik.Prijatelji[i].Username</a>
+            </div>
+        }
+    </div>
+    <form asp-area=""
+          asp-controller="LoginRegistracija"
+          asp-action="Logout">
+        <button type="submit" class="btn btn-primary">
+            Logout
+        </button>
+    </form>
+    
+</div>
